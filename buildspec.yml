@@ -3,7 +3,7 @@ version: 0.2
 batch:
   fast-fail: false
   build-fanout:
-    parallelism: 1
+    parallelism: 2
     ignore-failure: false
 
 phases:
@@ -17,9 +17,6 @@ phases:
   build:
     commands:
       - echo 'Running pytest'
-      - pytest tests/multiplication_test.py
-      - pytest tests/multiplication_test.py tests/test_addition.py tests/test_subtraction.py
-      - codebuild-tests-run --test-command 'echo $("$env:CODEBUILD_CURRENT_SHARD_FILES" -split \"`n\") eshan' --files-search "codebuild-glob-search **/test_*.py **/*_test.py" 
       - codebuild-tests-run --test-command 'pytest @("$env:CODEBUILD_CURRENT_SHARD_FILES" -split \"`r?`n\")' --files-search "codebuild-glob-search **/test_*.py **/*_test.py" 
 
   post_build:
