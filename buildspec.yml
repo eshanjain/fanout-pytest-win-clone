@@ -18,7 +18,7 @@ phases:
     commands:
       - echo 'Running pytest'
       - codebuild-tests-run --test-command 'echo "$env:CODEBUILD_CURRENT_SHARD_FILES" eshan' --files-search "codebuild-glob-search **/test_*.py **/*_test.py" 
-      - codebuild-tests-run --test-command 'pytest ($env:CURRENT_SHARD_FILES -split "`n" | Where-Object { $_.Trim() }) -join ' ' -v' --files-search "codebuild-glob-search **/test_*.py **/*_test.py" 
+      - codebuild-tests-run --test-command 'pytest $(($env:CODEBUILD_CURRENT_SHARD_FILES -split "`n") -join " ")' --files-search "codebuild-glob-search **/test_*.py **/*_test.py" 
 
   post_build:
     commands:
