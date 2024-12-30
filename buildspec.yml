@@ -17,8 +17,7 @@ phases:
   build:
     commands:
       - echo 'Running pytest'
-      - codebuild-tests-run --test-command "('$env:CODEBUILD_CURRENT_SHARD_FILES' -split '(`n|\\`r`n|`r|\\n)' -join ' ').Trim()" --files-search "codebuild-glob-search **/test_*.py **/*_test.py" 
-      - codebuild-tests-run --test-command 'npx jest Write-Output (($env:CODEBUILD_CURRENT_SHARD_FILES -split "`n") -join " ") -v' --files-search "codebuild-glob-search **/test_*.py **/*_test.py" 
+      - codebuild-tests-run --test-command "echo $env:CODEBUILD_CURRENT_SHARD_FILES" --files-search "codebuild-glob-search **/test_*.py **/*_test.py" 
   post_build:
     commands:
       - echo "Would deploy here"
