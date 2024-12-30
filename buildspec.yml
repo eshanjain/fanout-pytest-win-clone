@@ -17,7 +17,6 @@ phases:
   build:
     commands:
       - echo 'Running pytest'
-      - rspec --init
       - codebuild-tests-run --test-command "pytest" --files-search "codebuild-glob-search test_*.py *_test.py" 
   post_build:
     commands:
