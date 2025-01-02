@@ -3,7 +3,7 @@ version: 0.2
 batch:
   fast-fail: false
   build-fanout:
-    parallelism: 5
+    parallelism: 2
     ignore-failure: false
 
 phases:
@@ -18,10 +18,10 @@ phases:
     commands:
       - echo 'Running pytest'
       - |
-         codebuild-tests-run \
-          --test-command 'pytest @("$env:CODEBUILD_CURRENT_SHARD_FILES" -split \"`r?`n\")'  \
-          --files-search "codebuild-glob-search '**/test_*.py' '**/*_test.py'" \
-          --sharding-strategy 'equal-distribution' 
+        codebuild-tests-run \
+         --test-command 'pytest @("$env:CODEBUILD_CURRENT_SHARD_FILES" -split \"`r?`n\")'  \
+         --files-search "codebuild-glob-search '**/test_*.py' '**/*_test.py'" \
+         --sharding-strategy 'equal-distribution' 
   post_build:
     commands:
       - echo "Test execution completed"
